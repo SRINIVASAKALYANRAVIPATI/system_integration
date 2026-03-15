@@ -406,12 +406,11 @@ export default function InterviewDashboard({ onEnd }: DashboardProps) {
                 const now = Date.now();
                 const canAlert = (now - lastAlertTimeRef.current) > 3000;
 
-                // 1. Handle Critical Visual Violations (Phone/Multi-person)
-                if (data.phone_detected || data.multiple_persons) {
+                // 1. Handle Critical Visual Violations (Multi-person)
+                // Note: Phone detection is logged to the DB by the backend but no longer triggers a frontend warning
+                if (data.multiple_persons) {
                     if (canAlert) {
-                        const msg = data.phone_detected
-                            ? "AI CRITICAL ALERT: Mobile phone detected in frame!"
-                            : "AI CRITICAL ALERT: Multiple persons detected in frame!";
+                        const msg = "AI CRITICAL ALERT: Multiple persons detected in frame!";
 
                         setViolations(v => {
                             const next = v + 1;

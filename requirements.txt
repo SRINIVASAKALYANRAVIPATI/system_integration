@@ -1,0 +1,28 @@
+# AI Interview Assessment System - End-to-End Requirements
+
+# web server & api
+fastapi
+uvicorn
+pydantic
+websockets
+python-multipart
+
+# database
+sqlalchemy
+psycopg2-binary
+
+# ai & llm integration
+openai>=1.0.0
+python-dotenv
+
+# computer vision & proctoring (yolov8 + mediapipe)
+opencv-python
+mediapipe
+ultralytics
+numpy==1.24.3
+
+# speech to text (whisper)
+SpeechRecognition==3.10.1
+pyaudio==0.2.14
+faster-whisper==1.0.0
+sounddevice==0.4.6
