@@ -1,0 +1,11 @@
+node_modules/
+__pycache__/
+*.pyc
+venv/
+env/
+.env
+*.pt
+*.task
+.DS_Store
+logs/
+.venv/

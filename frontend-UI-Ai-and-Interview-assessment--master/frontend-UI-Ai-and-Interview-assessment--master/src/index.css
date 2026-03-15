@@ -1,0 +1,437 @@
+@import "tailwindcss";
+
+:root {
+  /* Dark Theme (Default) */
+  --bg-primary: #020617;
+  --bg-secondary: #0f172a;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #475569;
+  --glass-bg: rgba(15, 23, 42, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --card-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8);
+  --accent-indigo: #6366f1;
+  --accent-emerald: #10b981;
+  --accent-red: #ef4444;
+  --indicator-dot: rgba(99, 102, 241, 0.5);
+  --glass-inner: rgba(255, 255, 255, 0.03);
+
+  /* Mesh Gradient Tokens */
+  --mesh-1: #4f46e5;
+  --mesh-2: #7c3aed;
+  --mesh-3: #2563eb;
+  --mesh-4: #0891b2;
+}
+
+[data-theme='light'] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #fdfdfe;
+  /* Slightly lighter for better contrast with dark text */
+  --text-primary: #020617;
+  /* Near-black */
+  --text-secondary: #1e293b;
+  /* Deep Slate */
+  --text-muted: #475569;
+  /* Medium-Dark Slate */
+  --glass-bg: rgba(255, 255, 255, 0.95);
+  --glass-inner: rgba(0, 0, 0, 0.03);
+  --glass-border: rgba(0, 0, 0, 0.15);
+  /* Increased contrast */
+  --card-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.08);
+  --accent-indigo: #4338ca;
+  --accent-emerald: #059669;
+  --accent-red: #dc2626;
+  --indicator-dot: rgba(99, 102, 241, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+/* Clear, Solid Card Design (No Glassmorphism) */
+.glass-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--card-shadow);
+}
+
+/* Video Surface Styling */
+.video-surface {
+  position: relative;
+  width: 90vw;
+  max-width: 900px;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Force video to respect parent curvature */
+.video-surface video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 19px;
+  /* Slightly inner */
+}
+
+.video-surface.active {
+  box-shadow: 0 0 60px rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+/* Standalone Control Bar Below Video */
+.meet-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.meet-btn:hover {
+  background: var(--bg-primary);
+  transform: scale(1.1);
+  border-color: var(--accent-indigo);
+}
+
+.meet-btn.off {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+}
+
+.meet-btn.danger {
+  width: 64px;
+  background: var(--accent-red);
+  color: white;
+  border: none;
+  border-radius: 24px;
+}
+
+[data-theme='dark'] .floating-bar-attached {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Audio Visualizer Pulse */
+.audio-bar {
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+  height: 14px;
+}
+
+.audio-bar span {
+  width: 3px;
+  height: 4px;
+  background: var(--accent-emerald);
+  border-radius: 2px;
+}
+
+.audio-bar.pulsing span {
+  animation: audioPulse 0.8s ease-in-out infinite;
+}
+
+.audio-bar.pulsing span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.audio-bar.pulsing span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes audioPulse {
+
+  0%,
+  100% {
+    height: 4px;
+    opacity: 0.5;
+  }
+
+  50% {
+    height: 12px;
+    opacity: 1;
+  }
+}
+
+/* Modern Pill Badges */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s ease;
+}
+
+.badge-pill.status-active {
+  color: var(--accent-indigo);
+  border-color: var(--accent-indigo);
+  background: var(--glass-bg);
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+}
+
+/* Floating Control Bar */
+.floating-bar {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 24px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Meet-style Round Buttons */
+.meet-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.meet-btn:hover {
+  background: var(--bg-primary);
+  transform: scale(1.1) translateY(-1px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  border-color: var(--accent-indigo);
+}
+
+.meet-btn:active {
+  transform: scale(0.95);
+}
+
+.meet-btn.off {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+}
+
+.meet-btn.off:hover {
+  background: rgba(239, 68, 68, 0.15);
+}
+
+.meet-btn.danger {
+  width: 56px;
+  height: 40px;
+  background: var(--accent-red);
+  border: none;
+  border-radius: 20px;
+  color: white;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.25);
+}
+
+.meet-btn.danger:hover {
+  background: #dc2626;
+  box-shadow: 0 12px 28px rgba(239, 68, 68, 0.5);
+  transform: scale(1.1) translateY(-1px);
+}
+
+/* Tooltip replacement with aria-label */
+.meet-btn[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: -48px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: rgba(2, 6, 23, 0.98);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.meet-btn:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Avatar Placeholder */
+.avatar-placeholder {
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle at 30% 30%, #334155 0%, #0f172a 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  font-weight: 800;
+  color: #f8fafc;
+  border: 4px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.6);
+  margin-bottom: 32px;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+
+/* Advanced Animations */
+@keyframes mesh-pulse {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: scale(1.2) translate(5%, 5%);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.3;
+  }
+}
+
+.mesh-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+  animation: mesh-pulse 10s ease-in-out infinite;
+}
+
+.mesh-1 {
+  background: var(--mesh-1);
+  width: 400px;
+  height: 400px;
+  top: -100px;
+  left: -100px;
+  opacity: 0.4;
+}
+
+.mesh-2 {
+  background: var(--mesh-2);
+  width: 350px;
+  height: 350px;
+  bottom: -50px;
+  right: -50px;
+  opacity: 0.3;
+  animation-delay: -2s;
+}
+
+.mesh-3 {
+  background: var(--mesh-3);
+  width: 300px;
+  height: 300px;
+  top: 20%;
+  right: 10%;
+  opacity: 0.2;
+  animation-delay: -5s;
+}
+
+.glass-morphism {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.input-focus-glow:focus {
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2), 0 0 20px rgba(99, 102, 241, 0.1);
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px);
+  }
+
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+input::placeholder {
+  color: #475569;
+}
