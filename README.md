@@ -83,8 +83,8 @@ Configure your `.env` file in the `server` directory:
 ```env
 DB_HOST=localhost
 DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=postgres
+DB_USER="YOUR_USERNAME"
+DB_PASSWORD="YOUR_PASSWORD"
 DB_NAME=interview_db
 JWT_SECRET=ai_interview_super_secret_jwt_key_2024
 PORT=5000
