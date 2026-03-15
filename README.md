@@ -101,11 +101,17 @@ Make sure the YOLO model (`yolov8n.pt`) and Face Landmarker task (`face_landmark
 
 ---
 
+**NOTE:**
+**-Change database password to you database password**
+**-Change OpenAPI key before running the application**
+**-Enable google captioning and use google chrome for compatability** 
+
 ## 🚀 Running the Application
+
 
 A convenience script is provided to spin up all three servers (Frontend, Auth API, and FastAPI Orchestrator) simultaneously.
 
-From the root project directory, run:
+**From the root project directory, run:**
 ```powershell
 python run_full_stack.py
 ```
