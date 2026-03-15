@@ -29,6 +29,7 @@ def run_full_stack():
     ]
     env["PYTHONPATH"] = os.pathsep.join(python_path)
     env["OPENAI_API_KEY"] = "YOUR_OPENAI_API_KEY_HERE"
+    env["JWT_SECRET"] = "ai_interview_super_secret_jwt_key_2024"
     env["USE_MOCK_MODE"] = "false"
 
     # Kill existing node processes
