@@ -14,6 +14,7 @@ psycopg2-binary
 # ai & llm integration
 openai>=1.0.0
 python-dotenv
+PyJWT
 
 # computer vision & proctoring (yolov8 + mediapipe)
 opencv-python
